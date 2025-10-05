@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    font-family: theme('fontFamily.sans');
+    background-color: #f6fbf7;
+    color: #0f172a;
+  }
+
+  body {
+    @apply min-h-screen bg-gradient-to-b from-white via-[#f6fbf7] to-white text-slate-900 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-slate-900;
+  }
+
+  a {
+    @apply text-eco-primary transition-colors duration-200 ease-out;
+  }
+
+  a:hover {
+    @apply text-emerald-600;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply rounded-2xl bg-white/80 shadow-lg backdrop-blur;
+  }
+
+  .eco-gradient {
+    @apply bg-gradient-to-br from-eco-primary via-emerald-400 to-eco-sky;
+  }
+
+  .eco-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.eco.primary') transparent;
+  }
+
+  .eco-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .eco-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, theme('colors.eco.primary'), theme('colors.eco.sky'));
+    border-radius: 9999px;
+  }
+}
