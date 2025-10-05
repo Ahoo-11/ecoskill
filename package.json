@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.58.0",
+    "@vechain/dapp-kit-react": "^2.0.4",
     "autoprefixer": "^10.4.21",
+    "ethers": "^6.15.0",
     "framer-motion": "^12.23.22",
     "lucide-react": "^0.544.0",
     "postcss": "^8.5.6",
+    "prop-types": "^15.8.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3",
@@ -22,16 +25,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@tailwindcss/postcss": "^4.1.14",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react": "^5.0.4",
-    "eslint": "^9.36.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.37.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
-    "vite": "npm:rolldown-vite@7.1.14"
+    "vite": "^5.4.9",
+    "vite-plugin-checker": "^0.11.0"
   },
-  "overrides": {
-    "vite": "npm:rolldown-vite@7.1.14"
-  }
+  "overrides": {}
 }

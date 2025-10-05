@@ -1,3 +1,14 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@theme {
+  --color-eco-primary: #10B981;
+  --color-eco-secondary: #2C5530;
+  --color-eco-sky: #38BDF8;
+  --color-eco-sunshine: #FACC15;
+  --font-sans: Inter, Poppins, "DM Sans", system-ui, sans-serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,7 +16,7 @@
 @layer base {
   :root {
     color-scheme: light;
-    font-family: theme('fontFamily.sans');
+    font-family: var(--font-sans);
     background-color: #f6fbf7;
     color: #0f172a;
   }
@@ -43,7 +54,7 @@
 
   .eco-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: theme('colors.eco.primary') transparent;
+    scrollbar-color: var(--color-eco-primary) transparent;
   }
 
   .eco-scrollbar::-webkit-scrollbar {
@@ -51,7 +62,7 @@
   }
 
   .eco-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, theme('colors.eco.primary'), theme('colors.eco.sky'));
+    background: linear-gradient(180deg, var(--color-eco-primary), var(--color-eco-sky));
     border-radius: 9999px;
   }
 }

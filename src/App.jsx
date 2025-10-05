@@ -1,14 +1,50 @@
-import { NavLink, Outlet, Route, Routes } from 'react-router-dom';
+import { NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
 import { Button } from './components/ui/Button.jsx';
+import Onboarding from './components/Onboarding.jsx';
+import SignUp from './components/Auth/SignUp.jsx';
+import Login from './components/Auth/Login.jsx';
+import QuizFlow from './components/Quiz/QuizFlow.jsx';
+import Dashboard from './components/Dashboard/Dashboard.jsx';
+import AuthGuard from './components/AuthGuard.jsx';
+import Tutor from './components/Tutor/Tutor.jsx';
+import ChallengeSubmit from './components/Challenge/ChallengeSubmit.jsx';
+import { useAuth } from './hooks/useAuth.jsx';
+import LessonView from './components/Lesson/LessonView.jsx';
 
-const navItems = [
-  { to: '/welcome', label: 'Onboarding' },
-  { to: '/signup', label: 'Sign Up' },
-  { to: '/login', label: 'Login' },
-  { to: '/onboarding-quiz', label: 'Quiz' },
-  { to: '/dashboard', label: 'Dashboard' }
-];
+function HeaderNav() {
+  const { user } = useAuth();
+  const location = useLocation();
+  const isWelcome = location.pathname.startsWith('/welcome');
+  const guestLinks = [
+    { to: '/signup', label: 'Sign Up' },
+    { to: '/login', label: 'Login' }
+  ];
+  const authedLinks = [
+    { to: '/dashboard', label: 'Dashboard' },
+    { to: '/onboarding-quiz', label: 'Quiz' },
+    { to: '/tutor', label: 'Tutor' }
+  ];
+  const links = user ? authedLinks : guestLinks;
+
+  return (
+    <nav className="hidden gap-2 md:flex">
+      {links.map((item) => (
+        <NavLink
+          key={item.to}
+          to={item.to}
+          className={({ isActive }) =>
+            `rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+              isActive ? 'bg-emerald-500 text-white shadow-soft' : 'text-emerald-700 hover:bg-emerald-100'
+            }`
+          }
+        >
+          {item.label}
+        </NavLink>
+      ))}
+    </nav>
+  );
+}
 
 const Placeholder = ({ title }) => (
   <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-emerald-50 px-6 py-12 text-center">
@@ -40,21 +76,7 @@ const AppShell = () => (
             <h1 className="text-lg font-semibold text-slate-900">Design System Playground</h1>
           </div>
         </div>
-        <nav className="hidden gap-2 md:flex">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive ? 'bg-emerald-500 text-white shadow-soft' : 'text-emerald-700 hover:bg-emerald-100'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+        <HeaderNav />
       </div>
     </header>
     <main className="flex-1">
@@ -75,11 +97,49 @@ function App() {
   return (
     <Routes>
       <Route element={<AppShell />}>
-        <Route path="/welcome" element={<Placeholder title="Onboarding Flow" />} />
-        <Route path="/signup" element={<Placeholder title="Sign Up" />} />
-        <Route path="/login" element={<Placeholder title="Login" />} />
-        <Route path="/onboarding-quiz" element={<Placeholder title="Personalization Quiz" />} />
-        <Route path="/dashboard" element={<Placeholder title="EcoSkill Dashboard" />} />
+        <Route path="/welcome" element={<Onboarding />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/onboarding-quiz"
+          element={
+            <AuthGuard>
+              <QuizFlow />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/challenge/:id/submit"
+          element={
+            <AuthGuard>
+              <ChallengeSubmit />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/tutor"
+          element={
+            <AuthGuard>
+              <Tutor />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/lesson/:id"
+          element={
+            <AuthGuard>
+              <LessonView />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <AuthGuard>
+              <Dashboard />
+            </AuthGuard>
+          }
+        />
         <Route path="*" element={<Placeholder title="EcoSkill Experience Coming Soon" />} />
       </Route>
     </Routes>

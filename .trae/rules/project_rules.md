@@ -1,0 +1,1 @@
+Always use ecoskill_ prefix for creatign supabase tables or for the things you do on supabase.
